@@ -1,0 +1,61 @@
+
+
+
+These are the top 5 processes which consumes the most resources
+TIMESTAMP :Tue Jan 21 03:45:01 PM +0545 2025
+======================================================
+    PID    PPID CMD                         %CPU %MEM
+  19203   19201 ps -eo pid,ppid,cmd,%cpu,%m  100  0.0
+  12954   11135 /snap/firefox/4793/usr/lib/  3.7  6.5
+  11135    2178 /snap/firefox/4793/usr/lib/  3.2  4.3
+   2178    1916 /usr/bin/gnome-shell         2.7  4.1
+    324       1 /usr/lib/systemd/systemd-jo  2.6  0.3
+======================================================
+
+
+These are the top 5 processes which consumes the most resources
+TIMESTAMP :Tue Jan 21 03:50:01 PM +0545 2025
+======================================================
+    PID    PPID CMD                         %CPU %MEM
+  12954   11135 /snap/firefox/4793/usr/lib/  3.6  6.5
+  11135    2178 /snap/firefox/4793/usr/lib/  3.2  4.3
+   2178    1916 /usr/bin/gnome-shell         2.7  4.1
+    324       1 /usr/lib/systemd/systemd-jo  2.6  0.3
+   6422    6330 /snap/slack/178/usr/lib/sla  2.2  5.1
+======================================================
+
+
+These are the top 5 processes which consumes the most resources
+TIMESTAMP :Tue Jan 21 03:55:01 PM +0545 2025
+======================================================
+    PID    PPID CMD                         %CPU %MEM
+  12954   11135 /snap/firefox/4793/usr/lib/  3.5  6.5
+  11135    2178 /snap/firefox/4793/usr/lib/  3.1  4.3
+   2178    1916 /usr/bin/gnome-shell         2.7  4.1
+    324       1 /usr/lib/systemd/systemd-jo  2.5  0.3
+   6422    6330 /snap/slack/178/usr/lib/sla  2.2  5.3
+======================================================
+
+
+These are the top 5 processes which consumes the most resources
+TIMESTAMP :Tue Jan 21 04:00:01 PM +0545 2025
+======================================================
+    PID    PPID CMD                         %CPU %MEM
+  12954   11135 /snap/firefox/4793/usr/lib/  3.5  6.5
+  11135    2178 /snap/firefox/4793/usr/lib/  3.1  4.3
+   2178    1916 /usr/bin/gnome-shell         2.6  4.1
+    324       1 /usr/lib/systemd/systemd-jo  2.5  0.3
+   6422    6330 /snap/slack/178/usr/lib/sla  2.3  5.6
+======================================================
+
+
+These are the top 5 processes which consumes the most resources
+TIMESTAMP :Tue Jan 21 04:05:01 PM +0545 2025
+======================================================
+    PID    PPID CMD                         %CPU %MEM
+  12954   11135 /snap/firefox/4793/usr/lib/  3.4  6.7
+  11135    2178 /snap/firefox/4793/usr/lib/  3.1  4.4
+   2178    1916 /usr/bin/gnome-shell         2.6  4.1
+    324       1 /usr/lib/systemd/systemd-jo  2.5  0.3
+   6422    6330 /snap/slack/178/usr/lib/sla  2.2  5.7
+======================================================

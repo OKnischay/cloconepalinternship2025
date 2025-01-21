@@ -1,10 +1,9 @@
-#Task 2:
-Intro to Cron Jobs - System Monitoring Task
+# Task 2: Intro to Cron Jobs - System Monitoring Task
 
-#Objective:
+# Objective:
 To create a simple script to monitor system processes and learn how to automate tasks using cron jobs.
 
-##Task done
+## Task done
 
 ### 1. Created a bash script that:
  - Listed the top 5 processes using the most system resources 

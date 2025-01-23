@@ -1,0 +1,78 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM</title>
+</head>
+<body>
+    <input type="text" value = "" placeholder="row" id="rowNumber">
+    <input type="text" value = "" placeholder="column" id="columnNumber">
+    <input type="button" value = "Click Me" onclick="ClickClak()">
+    <select name="theme" id="theme" onclick="themes()">
+        <option value="light">light</option>
+        <option value="dark">dark</option>
+    </select>
+    <input type="button" value="alert" onclick="sendAlret()">
+    <div id="table-container"></div>
+</body>
+<script>
+
+    function ClickClak(){
+    let removeContent = document.getElementById("table-container")
+    removeContent.innerHTML = "";
+
+    let rowNumber = document.getElementById("rowNumber").value;
+    let columnNumber = document.getElementById("columnNumber").value;
+    
+    const tbl = document.createElement("table");
+    const tbh = document.createElement("thead")
+    
+    for(let i = 0;i<columnNumber;i++){
+        const thea = document.createElement("th");
+        const thda = document.createTextNode(`head: ${i}`);
+        thea.appendChild(thda);
+        tbh.appendChild(thea);
+    }
+    
+    const tb = document.createElement("tbody")
+        for(i = 0;i < rowNumber; i++) {
+            const row = document.createElement("tr")
+            for (j = 0;j<columnNumber;j++){
+                const tdata = document.createElement("td");
+                const ttext = document.createTextNode(`cell : ${i} | ${j}`);
+                tdata.appendChild(ttext);
+                row.appendChild(tdata);
+            }
+            tb.appendChild(row);
+           }
+           tbl.appendChild(tbh);
+           tbl.appendChild(tb);
+
+           tbl.setAttribute("id","table");
+           
+           document.body.appendChild(tbl);
+           removeContent.appendChild(tbl);
+           tbl.setAttribute("border","21rem")
+           tbl.style.padding = 12 ;
+           tbl.style.margin = 20;
+    }
+    function sendAlret(){
+        alert("Hello World");
+    }
+    function themes(){
+        const table = document.getElementById("table");
+        const theme = document.getElementById("theme").value;
+        table.style.margin="10";
+        if(theme === "light"){
+            document.body.style.background = "white";
+            table.style.background = "#E0E0E0";
+            document.body.style.color = "black";
+        }
+        else if(theme === "dark"){
+            document.body.style.background= "black";
+            table.style.background = "#00796B"
+            document.body.style.color ="white";
+        }
+    }
+</script>
+</html>

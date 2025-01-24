@@ -1,0 +1,73 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body{
+    display:flex;
+    padding: 20px;
+    justify-content: center;
+    line-height: 2; 
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#container{
+    padding:30px 40px;
+    height: fit-content;
+    width: 1000px;
+    background-color: rgb(252, 252, 178);
+    border-radius: 10px;
+}
+fieldset{
+    padding: 20px 30px;
+    background-color: white;
+    margin: 10px;
+    border-radius: 10px;
+}
+legend{
+    border-radius: 10px;
+    padding: 5px;
+    background: white;
+}
+div + div {
+    margin-top: 1em;
+    }
+.error{
+    color: red;
+    font-weight: bold;
+}
+label{
+    display: inline-block;
+    /* width: 230px; */
+    /* background-color: blue; */
+}
+input[type="text"], 
+input[type="email"], 
+input[type="tel"], 
+input[type="number"], textarea{
+    padding: 5px;
+    /* margin-left: 205px; */
+    width: 200px;
+    border: 1px solid black;
+}
+input:focus textarea:focus{
+    border-color: orange;
+}
+button {
+    margin: .5em;
+    font-size: 1em;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 16px;    
+  }
+  
+#submit-button {
+    display: flex; 
+    justify-content: center;
+}
+#linga{
+    margin-right: 10px;
+}
+  

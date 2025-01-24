@@ -18,3 +18,7 @@
 ### 3. Sticky Sidebar
 - Implemented sidebar that stays visible while scrolling using position: sticky
 
+### Output
+![Screenshot from 2025-01-22 23-58-25](https://github.com/user-attachments/assets/c4966049-09e6-4dd0-a245-795aedbd89f4)
+
+

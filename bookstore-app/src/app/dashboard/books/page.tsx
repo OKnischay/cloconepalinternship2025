@@ -1,9 +1,11 @@
-import { DisplayTable } from '@/components/display-table'
-import React from 'react'
+import DisplayBook from "@/components/dashboard/book/DisplayBook"
+
 
 const books = () => {
   return (
-   <DisplayTable/>
+  <div>
+    <DisplayBook />
+  </div>
   )
 }
 

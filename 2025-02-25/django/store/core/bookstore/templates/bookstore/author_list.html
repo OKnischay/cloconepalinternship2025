@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Authors</title>
+    <link rel="stylesheet" href='{% static "style.css" %}'>
+</head>
+<body>
+    <h1>Authors</h1>
+    <a href="{% url 'author_create' %}">Add Author</a>
+    <table>
+        <thead>
+            <th>First Name</th>
+            <th>Last Name</th>
+        </thead>
+        <tbody>
+            {% for author in authors%}
+            <tr>
+                <td>{{author.first_name}}</td>
+                <td>{{author.last_name}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    <a href="{% url 'index'%}">Back to Homepage</a>
+</body>
+</html>

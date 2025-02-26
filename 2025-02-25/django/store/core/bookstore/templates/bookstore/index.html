@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bookstore App</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        ul li {
+            display: inline-block;
+            margin: 15px;
+        }
+
+        ul li a {
+            text-decoration: none;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        ul li a:hover {
+            background-color:rgb(150, 112, 240);
+            color: rgb(13, 1, 41);
+        }
+
+        .user-info {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .user-info a {
+            color:rgb(255, 0, 0);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 30px;
+        }
+
+        .user-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Bookstore App</h1>
+
+    <ul>
+        <li><a href="{% url 'author_list' %}">View Authors</a></li>
+        <li><a href="{% url 'book_list' %}">View Books</a></li>
+        <li><a href="{% url 'customer_list' %}">View Customers</a></li>
+    </ul>
+
+    {% if user.is_authenticated %}
+    <div class="user-info">
+        <p>Logged in as: <strong>{{ user.username }}</strong></p>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    {% endif %}
+
+</body>
+
+</html>

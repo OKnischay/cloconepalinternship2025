@@ -16,7 +16,7 @@ class Author(models.Model):
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
-class Books(models.Model):
+class Book(models.Model):
     book_id = models.AutoField(primary_key=True)
     isbn = models.CharField(max_length=13,unique=True)
     title = models.CharField(max_length=100)
@@ -47,6 +47,9 @@ class Categories(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        db_table = 'Categories'
+
 class Address(models.Model):
     country = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
@@ -55,7 +58,7 @@ class Address(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-class Customers(models.Model):
+class Customer(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.CharField(max_length=255,unique=True)
@@ -66,10 +69,13 @@ class Customers(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        db_table = 'Customers'
+
     def __str__(self):
         return f'{self.first_name} {self.last_name}'
 
-class Employees(models.Model):
+class Employee(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.CharField(max_length=255,unique=True)
@@ -87,7 +93,7 @@ class Employees(models.Model):
         return f'{self.first_name} {self.last_name}'
 
 class Inventory(models.Model):
-    book = models.OneToOneField('Books', on_delete=models.CASCADE)  
+    book = models.OneToOneField('Book', on_delete=models.CASCADE)  
     quantity = models.IntegerField(default=0)  
     min_stock_level = models.IntegerField(default=0)  
     max_stock_level = models.IntegerField(default=0)  
@@ -96,16 +102,16 @@ class Inventory(models.Model):
     
 
 class Review(models.Model):
-    book_id = models.ForeignKey(Books, on_delete=models.CASCADE)
-    customers_id = models.ForeignKey(Customers, on_delete=models.CASCADE)
+    book_id = models.ForeignKey(Book, on_delete=models.CASCADE)
+    customers_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
     rating = models.IntegerField()
     review_text = models.TextField()
 
     def __str__(self):
         return f"{self.id} | {self.book_id.title}"
     
-class Orders(models.Model):
-    customer = models.ForeignKey(Customers, on_delete=models.CASCADE)
+class Order(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     billing_address = models.OneToOneField(Address, related_name="billing_address", on_delete=models.CASCADE)
     shipping_address = models.OneToOneField( Address, related_name="shipping_address", on_delete=models.CASCADE)
     quantity = models.IntegerField()
@@ -117,17 +123,17 @@ class Orders(models.Model):
     def __str__(self):
         return f"{self.id} | {self.customer.first_name} | ${self.total_amount}"
     
-class OrderItems(models.Model):
-    order = models.OneToOneField(Orders, on_delete=models.CASCADE)
-    book = models.OneToOneField(Books, on_delete=models.CASCADE)
+class OrderItem(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.CASCADE)
+    book = models.OneToOneField(Book, on_delete=models.CASCADE)
     quantity = models.IntegerField()
     unit_price = models.DecimalField(max_digits=10,decimal_places=2)
     def __str__(self):
         return f"{self.id} | {self.book.title} | {self.order.id}"
 
-class Payments(models.Model):
-    order = models.OneToOneField(Orders, on_delete=models.RESTRICT, null=True)
-    customers = models.ForeignKey(Customers, on_delete=models.RESTRICT, default=1)
+class Payment(models.Model):
+    order = models.OneToOneField(Order, on_delete=models.RESTRICT, null=True)
+    customers = models.ForeignKey(Customer, on_delete=models.RESTRICT, default=1)
     amount = models.DecimalField(decimal_places=2, max_digits=10)    
     payment_method = models.CharField(
         choices=Payment_method.choices,

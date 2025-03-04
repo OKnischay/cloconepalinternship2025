@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import Author, Category, Book, Order, OrderItem, Review, Payment
-from django.contrib.auth.models import User
+from .models import  *
+from users.serializers import UserSerializer
+# from django.contrib.auth.models import User
 
 # class BookSerializer(serializers.ModelSerializer):
 #     class Meta:
@@ -99,7 +100,8 @@ class BookSerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    # user = UserSerializer(read_only=True)
+    user = UserSerializer(read_only=True)
+    total_quantity = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Order
@@ -113,9 +115,15 @@ class OrderItemSerializer(serializers.ModelSerializer):
         model = OrderItem
         fields = "__all__"
 
+    def validate_quantity(self, value):
+        if value > self.instance.book.stock:
+            raise serializers.ValidationError("Quantity exceeds available stock.")
+        return value
+
 
 class ReviewSerializer(serializers.ModelSerializer):
-    # user = UserSerializer(read_only=True)
+    user = UserSerializer(read_only=True)
+    book = BookSerializer(read_only=True)
 
     class Meta:
         model = Review
@@ -124,7 +132,10 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class PaymentSerializer(serializers.ModelSerializer):
     order = OrderSerializer(read_only=True)
-
+    amount = serializers.CharField(read_only=True)
     class Meta:
         model = Payment
         fields = "__all__"
+    
+    # def validate_amount(self,value):
+        

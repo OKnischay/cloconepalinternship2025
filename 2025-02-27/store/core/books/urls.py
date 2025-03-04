@@ -12,7 +12,7 @@ from .views import (
     BookListCreateAPIView, BookDetailAPIView,
     CategoryListCreateAPIView, CategoryDetailAPIView,
     OrderListCreateAPIView, OrderDetailAPIView,
-    PaymentListCreateAPIView, PaymentDetailAPIView
+    PaymentListCreateAPIView, PaymentDetailAPIView, ReviewListCreateAPIView#, ReviewDetailAPIView ,UserListAPIView,UserDetailAPIView
 )
 
 urlpatterns = [
@@ -23,6 +23,9 @@ urlpatterns = [
     path('books/', BookListCreateAPIView.as_view(), name='book-list'),
     path('books/<str:pk>/', BookDetailAPIView.as_view(), name='book-detail'),
 
+    # path('users/', UserListAPIView.as_view(), name='user-list'),
+    # path('users/<str:username>/', UserDetailAPIView.as_view(), name='user-detail'),
+
     path('categories/', CategoryListCreateAPIView.as_view(), name='category-list'),
     path('categories/<str:pk>/', CategoryDetailAPIView.as_view(), name='category-detail'),
 
@@ -31,4 +34,9 @@ urlpatterns = [
 
     path('payments/', PaymentListCreateAPIView.as_view(), name='payment-list'),
     path('payments/<str:pk>/', PaymentDetailAPIView.as_view(), name='payment-detail'),
+
+    path('review/', ReviewListCreateAPIView.as_view(), name="reviews"),
+    # path('review/<str:book_id>/', ReviewDetailAPIView.as_view(), name="review-detail")
+
+    #  path('api-token-auth/', CustomAuthToken.as_view(), name='api_token_auth'),
 ]

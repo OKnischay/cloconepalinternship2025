@@ -1,18 +1,38 @@
 from django.forms.models import model_to_dict
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
+from rest_framework.generics import GenericAPIView
+from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Author, Category, Book, Order, OrderItem, Review, Payment
+from .models import Author, Category, Book, Order, Review, Payment  # , User,OrderItem,
 from .serializers import (
     AuthorSerializer,
     CategorySerializer,
     BookSerializer,
     OrderSerializer,
-    OrderItemSerializer,
+    # OrderItemSerializer,
     ReviewSerializer,
     PaymentSerializer,
+    # UserSerializer,
 )
+
+# from rest_framework.authtoken.views import ObtainAuthToken
+# from rest_framework.authtoken.models import Token
+# from rest_framework.permissions import IsAuthenticated
+
+
+# class CustomAuthToken(ObtainAuthToken):
+#     def post(self, request, *args, **kwargs):
+#         serializer = self.serializer_class(data=request.data, context={'request': request})
+#         serializer.is_valid(raise_exception=True)
+#         user = serializer.validated_data['user']
+#         token, created = Token.objects.get_or_create(user=user)
+#         return Response({
+#             'token': token.key,
+#             'user_id': user.pk,
+#             'email': user.email
+#         })
 
 
 class AuthorListCreateAPIView(APIView):
@@ -202,3 +222,23 @@ class PaymentDetailAPIView(APIView):
         payment = self.get_object(pk)
         payment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ReviewListCreateAPIView(GenericAPIView):
+    serializer_class = ReviewSerializer
+    filter_backends = [SearchFilter]
+    search_fields = ["book__title"]
+    queryset = Review.objects.all()
+
+    def get(self, request):
+        query = self.filter_queryset(self.get_queryset())
+        serializer = ReviewSerializer(query, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, book_id):
+        serializer = ReviewSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(book_id=book_id, user=request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

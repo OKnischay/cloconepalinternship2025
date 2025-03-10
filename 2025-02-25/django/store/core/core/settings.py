@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'bookstore',
+
+    # 'rest_framework',
+    # 'djangorest'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +87,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
      'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'bookstore_db',
         'USER': 'postgres',
         'PASSWORD': 'nischaya1',

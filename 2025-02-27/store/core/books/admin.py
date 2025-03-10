@@ -19,7 +19,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "isbn","price", "stock")
+    list_display = ("id", "title", "isbn", "description","pages", "stock","price")
     list_filter = ("categories",)
     search_fields = ("title", "isbn")
     

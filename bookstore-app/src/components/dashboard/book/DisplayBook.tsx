@@ -36,7 +36,7 @@ export default function DisplayBook({ bookList }: { bookList: { count: number; r
       const res = await fetch(`${api}/books?page=${newPage}`);
       const data = await res.json();
       setBooks(data.results);
-      console.log('yoe')
+      console.log('yo')
     } catch (error) {
       console.error("Failed to fetch books:", error);
     }

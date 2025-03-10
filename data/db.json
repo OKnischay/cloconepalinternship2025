@@ -1,0 +1,130 @@
+{
+  "books": [
+    {
+      "id": "733",
+      "isbn": "1234567890",
+      "title": "The Power of Habits",
+      "authorId": 30,
+      "description": "A deep dive into how habits shape our lives and how we can transform them.",
+      "pageCount": 283,
+      "price": 15.99,
+      "publishedDate": "2018-05-12"
+    },
+    {
+      "id": "734",
+      "isbn": "2345678901",
+      "title": "Journey Through Time",
+      "authorId": 31,
+      "description": "A science fiction novel about time travel and the paradoxes that come with it.",
+      "pageCount": 420,
+      "price": 19.5,
+      "publishedDate": "2015-02-24"
+    },
+    {
+      "id": "735",
+      "isbn": "3456789012",
+      "title": "Leadership in Crisis",
+      "authorId": 32,
+      "description": "A guide to managing leadership during difficult times.",
+      "pageCount": 150,
+      "price": 12,
+      "publishedDate": "2020-08-01"
+    },
+    {
+      "id": "736",
+      "isbn": "4567890123",
+      "title": "The Great Exploration",
+      "authorId": 33,
+      "description": "A historical exploration of the great explorers and adventurers of the world.",
+      "pageCount": 500,
+      "price": 22.75,
+      "publishedDate": "2010-04-10"
+    },
+    {
+      "id": "737",
+      "isbn": "5678901234",
+      "title": "Mysteries of the Deep",
+      "authorId": 34,
+      "description": "A thrilling mystery novel set in a small coastal town.",
+      "pageCount": 320,
+      "price": 18.5,
+      "publishedDate": "2017-09-09"
+    },
+    {
+      "id": "738",
+      "isbn": "6789012345",
+      "title": "Mindful Moments",
+      "authorId": 35,
+      "description": "A book about the power of mindfulness and being present in the moment.",
+      "pageCount": 220,
+      "price": 14.99,
+      "publishedDate": "2019-06-15"
+    },
+    {
+      "id": "739",
+      "isbn": "7890123456",
+      "title": "The Art of Cooking",
+      "authorId": 36,
+      "description": "A chef’s guide to mastering the art of cooking with a variety of recipes.",
+      "pageCount": 400,
+      "price": 25,
+      "publishedDate": "2013-03-22"
+    },
+    {
+      "id": "740",
+      "isbn": "8901234567",
+      "title": "Tech Innovations",
+      "authorId": 37,
+      "description": "A comprehensive look at the latest breakthroughs in technology and innovation.",
+      "pageCount": 350,
+      "price": 29.95,
+      "publishedDate": "2021-12-01"
+    },
+    {
+      "id": "741",
+      "isbn": "9012345678",
+      "title": "From Darkness to Light",
+      "authorId": 38,
+      "description": "A novel about overcoming struggles and finding hope in the darkest times.",
+      "pageCount": 270,
+      "price": 16.99,
+      "publishedDate": "2018-11-20"
+    },
+    {
+      "id": "91b8",
+      "isbn": "12324342",
+      "title": "Hello world",
+      "authorId": 60,
+      "description": "I dont like books",
+      "pageCount": 300,
+      "price": 59.99
+    },
+    {
+      "id": "ee64",
+      "isbn": "123564354",
+      "title": "go back to sleep",
+      "authorId": 90,
+      "description": "sleep is the most healing treatment",
+      "pageCount": 100,
+      "price": 99.97
+    },
+    {
+      "id": "a360",
+      "isbn": "234342",
+      "title": "why is the so annoying",
+      "authorId": 230,
+      "description": "to annoying to describe",
+      "pageCount": 500,
+      "price": 499.99
+    },
+    {
+      "id": "256d",
+      "isbn": "95345",
+      "title": "get lost",
+      "authorId": 10,
+      "description": "seriously get lost",
+      "pageCount": 10,
+      "price": 9.95
+    }
+  ]
+}

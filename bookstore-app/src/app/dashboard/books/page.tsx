@@ -1,17 +1,30 @@
+'use client'
 import DisplayBook from "@/components/dashboard/book/DisplayBook"
-const api = process.env.NEXT_PUBLIC_BASE_URL
+import { fetchSomething } from "@/api/data"
+import { useEffect, useState } from "react"
+const books = () => {
+  const [bookList, setBookList] = useState()
 
-const books = async () => {
-  const fetchSomething = async () =>{
-    const response = await fetch(`${api}/books/`)
-    const data = response.json()
-    return data;
+  const [token, setToken] = useState(localStorage.getItem('access_token') || '')
+
+  useEffect(() => {
+    getData()
+  }, [])
+
+  const getData = async () => {
+    try {
+      const books = await fetchSomething(token)
+      setBookList(books)
+      console.log(books)
+    } catch (error) {
+      console.log(error)
+    }
   }
-  const bookList = await fetchSomething()
+
   return (
-  <div>
-    <DisplayBook bookList={bookList} />
-  </div>
+    <div>
+      <DisplayBook bookList={bookList} />
+    </div>
   )
 }
 

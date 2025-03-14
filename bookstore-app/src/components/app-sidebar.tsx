@@ -1,5 +1,4 @@
-import {LibraryBig, BookOpenText, UserPen, User} from "lucide-react"
-
+import { DashboardItems } from "./common/DashboardList";
 import {
   Sidebar,
   SidebarContent,
@@ -9,46 +8,33 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import Logout from "./logout";
 
-// Menu items.
-const items = [
-  {
-    title: "Overview",
-    url: "/dashboard",
-    icon: LibraryBig,
-  },
-  {
-    title: "Books",
-    url: "/dashboard/books",
-    icon: BookOpenText,
-  },
-  {
-    title: "Authors",
-    url: "/dashboard/authors",
-    icon: UserPen,
-  },
-  {
-    title: "Customers",
-    url: "/dashboard/customers",
-    icon: User,
-  },
-]
+
+const handleLogout = () => {
+  localStorage.removeItem("access_token");
+};
 
 export function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar collapsible="icon">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-lg">BookStore</SidebarGroupLabel>
+          <SidebarGroupLabel className="mb-2 text-2xl font-bold p-6 border-b border-slate-700">
+            BookStore
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {DashboardItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
+                    <a
+                      href={item.url}
+                      className="flex items-center gap-3 p-4 hover:bg-slate-200/50 transition-colors duration-200 rounded-lg"
+                    >
+                      <item.icon className="w-5 h-5 " />
+                      <span className="font-medium">{item.title}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
@@ -57,6 +43,9 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <div className="m-2 border-t border-slate-700">
+        <Logout/>
+      </div>
     </Sidebar>
-  )
+  );
 }

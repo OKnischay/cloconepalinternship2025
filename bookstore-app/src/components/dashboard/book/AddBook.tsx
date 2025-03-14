@@ -1,190 +1,197 @@
-'use client';
+"use client"
+import type React from "react"
+import { useEffect, useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from "@/components/ui/label"
+import { AlertCircle, BookPlus, Loader2 } from "lucide-react"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Author, Category, BookFormData} from "@/types"
 
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
 
-interface Book {
-  id: number;
-  isbn: string;
-  title: string;
-  authorId: number;
-  description: string;
-  pageCount: number;
-  price: number;
-  publishedDate?: Date;
+interface AddBookFormProps {
+  onSubmit: (data: BookFormData) => Promise<void>;
+  onSuccess?: (data: any) => void;
+  initialData?: Partial<BookFormData>;
+  authors: Author[];
+  categories: Category[];
+  isLoading?: boolean;
+  error?: string;
+  icon?: React.ReactNode;
+  title?: string;
+  description?: string;
+  submitLabel?: string;
 }
 
-export default function Page() {
-  const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
-  
-  const [formData, setFormData] = useState<Omit<Book, 'id'>>({
-    isbn: '',
-    title: '',
-    authorId: 0,
-    description: '',
-    pageCount: 0,
-    price: 0,
-    publishedDate: undefined
-  });
+const defaultFormData: BookFormData = {
+  title: "",
+  isbn: "",
+  description: "",
+  price: "",
+  pages: "",
+  stock: "",
+  authors: [],
+  categories: [],
+};
+
+const AddBookForm: React.FC<AddBookFormProps> = ({
+  onSubmit,
+  onSuccess,
+  initialData = {},
+  authors = [],
+  categories = [],
+  isLoading = true,
+  error = "",
+  icon = <BookPlus className="h-5 w-5" />,
+  title = "Add New Book",
+  description = "Enter the details of the book you want to add to the inventory",
+  submitLabel = "Add Book",
+}) => {
+  const [formData, setFormData] = useState<BookFormData>({ ...defaultFormData, ...initialData });
+  const [formError, setFormError] = useState(error);
+
+  // Update form error when prop changes
+  useEffect(() => {
+    setFormError(error);
+  }, [error]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleMultiSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, selectedOptions } = e.target;
+    setFormData({
+      ...formData,
+      [name]: Array.from(selectedOptions, (option) => option.value),
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError(null);
+    setFormError("");
     
     try {
-      const response = await fetch('http://localhost:5000/books', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to add book');
-      }
-      
-      router.push('/dashboard/books');
-    } catch (error) {
-      console.error('Error adding book:', error);
-      setError('Failed to add book');
+      await onSubmit(formData);
+      if (onSuccess) onSuccess(formData);
+      // Don't reset form data here - leave it to the parent component to decide
+    } catch (err: any) {
+      setFormError(err.message || "An error occurred");
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: name === 'price' || name === 'pageCount' || name === 'authorId' 
-        ? Number(value)
-        : value
-    }));
-  };
-
-  if (error) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <p className="text-red-500 mb-4">{error}</p>
-        <Button onClick={() => router.push('/dashboard/books')}>Back to Books</Button>
-      </div>
-    );
-  }
-
   return (
-    <div className="max-w-md mx-auto mt-10 p-6">
-      <h1 className="text-2xl font-bold mb-6">Add New Book</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="title" className="block mb-2 font-medium">
-            Title:
-          </label>
-          <input
-            id="title"
-            name="title"
-            type="text"
-            value={formData.title}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
+    <Card className="w-full max-w-md mx-auto shadow-lg">
+      <CardHeader className="space-y-1">
+        <CardTitle className="text-2xl flex items-center gap-2">
+          {icon}
+          {title}
+        </CardTitle>
+        <CardDescription>{description}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {formError && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription>{formError}</AlertDescription>
+            </Alert>
+          )}
 
-        <div>
-          <label htmlFor="isbn" className="block mb-2 font-medium">
-            ISBN:
-          </label>
-          <input
-            id="isbn"
-            name="isbn"
-            type="text"
-            value={formData.isbn}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
+          <div className="space-y-2">
+            <Label htmlFor="title">Title</Label>
+            <Input id="title" name="title" value={formData.title} onChange={handleChange} required />
+          </div>
 
-        <div>
-          <label htmlFor="authorId" className="block mb-2 font-medium">
-            Author ID:
-          </label>
-          <input
-            id="authorId"
-            name="authorId"
-            type="number"
-            value={formData.authorId}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
+          <div className="space-y-2">
+            <Label htmlFor="isbn">ISBN</Label>
+            <Input id="isbn" name="isbn" value={formData.isbn} onChange={handleChange} required />
+          </div>
 
-        <div>
-          <label htmlFor="price" className="block mb-2 font-medium">
-            Price:
-          </label>
-          <input
-            id="price"
-            name="price"
-            type="number"
-            step="0.01"
-            min="0"
-            value={formData.price}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
+          <div className="space-y-2">
+            <Label htmlFor="description">Description</Label>
+            <Textarea
+              id="description"
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              rows={3}
+              required
+            />
+          </div>
 
-        <div>
-          <label htmlFor="pageCount" className="block mb-2 font-medium">
-            Page Count:
-          </label>
-          <input
-            id="pageCount"
-            name="pageCount"
-            type="number"
-            min="1"
-            value={formData.pageCount}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="price">Price</Label>
+              <Input id="price" name="price" type="number" value={formData.price} onChange={handleChange} required />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="pages">Pages</Label>
+              <Input id="pages" name="pages" type="number" value={formData.pages} onChange={handleChange} required />
+            </div>
+          </div>
 
-        <div>
-          <label htmlFor="description" className="block mb-2 font-medium">
-            Description:
-          </label>
-          <input
-            id="description"
-            name="description"
-            type="text"
-            value={formData.description}
-            onChange={handleInputChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
+          <div className="space-y-2">
+            <Label htmlFor="stock">Stock</Label>
+            <Input id="stock" name="stock" type="number" value={formData.stock} onChange={handleChange} required />
+          </div>
 
-        <div className="flex space-x-4">
-          <Button
-            type="submit"
-            className="flex-1 bg-green-600 text-white hover:bg-green-700"
-          >
-            Add Book
+          <div className="space-y-2">
+            <Label htmlFor="authors">Authors</Label>
+            <select
+              id="authors"
+              name="authors"
+              multiple
+              value={formData.authors}
+              onChange={handleMultiSelect}
+              className="w-full p-2 border rounded min-h-[80px] focus:ring-2 focus:ring-primary/50 focus:border-primary"
+              required
+            >
+              {authors.map((author) => (
+                <option key={author.id} value={author.id}>
+                  {author.name}
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-muted-foreground">Hold Ctrl/Cmd to select multiple authors</p>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="categories">Categories</Label>
+            <select
+              id="categories"
+              name="categories"
+              multiple
+              value={formData.categories}
+              onChange={handleMultiSelect}
+              className="w-full p-2 border rounded min-h-[80px] focus:ring-2 focus:ring-primary/50 focus:border-primary"
+              required
+            >
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+            <p className="text-xs text-muted-foreground">Hold Ctrl/Cmd to select multiple categories</p>
+          </div>
+
+          <Button type="submit" className="w-full">
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Processing...
+              </>
+            ) : (
+              submitLabel
+            )}
           </Button>
-          <Button
-            type="button"
-            onClick={() => router.push('/dashboard/books')}
-            className="flex-1 bg-gray-600 text-white hover:bg-gray-700"
-          >
-            Cancel
-          </Button>
-        </div>
-      </form>
-    </div>
+        </form>
+      </CardContent>
+    </Card>
   );
-}
+};
+
+export default AddBookForm;
